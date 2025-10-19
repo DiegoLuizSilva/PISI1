@@ -1,0 +1,134 @@
+# user_manager.py
+
+# A nossa "base de dados" em memória vive neste módulo.
+usuarios = {}
+
+def get_valid_input(prompt, valid_options):
+    """Pede uma entrada ao usuário até que seja uma das opções válidas."""
+    while True:
+        value = input(prompt).strip().lower()
+        if value in valid_options:
+            return value
+        print(f"Opção inválida. Por favor, escolha uma das seguintes: {', '.join(valid_options)}")
+
+def cadastrar_usuario():
+    """Realiza o cadastro de um novo usuário no dicionário 'usuarios'."""
+    print("\n--- CADASTRO ---")
+    
+    while True:
+        username = input("Crie um nome de usuário: ").strip()
+        if not username:
+            print("O nome de usuário não pode ser vazio.")
+        elif username in usuarios:
+            print("Este nome de usuário já existe. Tente outro.")
+        else:
+            break
+    
+    password = input("Crie uma senha: ").strip()
+    nome_completo = input("Digite seu nome completo: ").strip()
+    
+    while True:
+        sexo = input("Sexo (M/F): ").strip().upper()
+        if sexo in ['M', 'F']:
+            break
+        else:
+            print("Entrada inválida. Digite 'M' ou 'F'.")
+    
+    while True:
+        try:
+            idade = int(input("Idade (anos): ").strip())
+            if 10 < idade < 120:
+                break
+            else:
+                print("Idade deve ser um número entre 10 e 120.")
+        except ValueError:
+            print("Por favor, digite um número para a idade.")
+
+    while True:
+        try:
+            peso = float(input("Peso em kg (ex: 75.5): ").strip())
+            if peso > 0:
+                break
+            else:
+                print("O peso deve ser maior que zero.")
+        except ValueError:
+            print("Por favor, digite um número válido para o peso.")
+    
+    while True:
+        try:
+            altura = float(input("Altura em metros (ex: 1.75): ").strip())
+            if 0.5 < altura < 3.0:
+                break
+            else:
+                print("A altura deve estar entre 0.5 e 3.0 metros.")
+        except ValueError:
+            print("Por favor, digite um número válido para a altura.")
+
+    objetivo = get_valid_input(
+        "Qual seu objetivo principal (perder gordura / manter peso / ganhar massa): ",
+        ['perder gordura', 'manter peso', 'ganhar massa']
+    )
+    nivel_treino = get_valid_input(
+        "Qual seu nível de treino (iniciante / intermediario / avancado): ",
+        ['iniciante', 'intermediario', 'avancado']
+    )
+    
+    usuarios[username] = {
+        'senha': password,
+        'nome': nome_completo,
+        'sexo': sexo,
+        'idade': idade,
+        'peso': peso,
+        'altura': altura,
+        'objetivo': objetivo,
+        'nivel_treino': nivel_treino
+    }
+    print(f"\n✅ Usuário {username} cadastrado com sucesso!")
+
+def verificar_login():
+    """Verifica as credenciais do usuário e retorna o username se for válido."""
+    print("\n--- ACESSAR CONTA ---")
+    username = input("Digite o nome de usuário: ").strip()
+    password = input("Digite a senha: ").strip()
+
+    if username in usuarios and usuarios[username]['senha'] == password:
+        print(f"\n✅ Acesso liberado! Bem-vindo(a), {usuarios[username]['nome']}!")
+        return username
+    else:
+        print("\n❌ Usuário ou senha incorretos.")
+        return None
+
+def editar_usuario(username):
+    """Permite que um usuário logado edite suas próprias informações."""
+    if username not in usuarios:
+        print("\n❌ Usuário não encontrado. Ocorreu um erro.")
+        return
+
+    print(f"\n--- EDITANDO PERFIL DE {username} ---")
+    print("(Pressione Enter para manter a informação atual)")
+
+    user_data = usuarios[username]
+
+    novo_nome = input(f"Nome completo ({user_data['nome']}): ").strip()
+    if novo_nome:
+        user_data['nome'] = novo_nome
+
+    # Lógica para editar os outros campos (sexo, idade, peso, altura, etc.)
+    # (Adicione loops de validação similares aos do cadastro se desejar)
+    print("\n✅ Perfil atualizado com sucesso!")
+
+
+def excluir_usuario():
+    """Exclui um usuário do dicionário."""
+    print("\n--- EXCLUIR PERFIL ---")
+    username = input("Digite o nome de usuário que deseja excluir: ").strip()
+    
+    if username in usuarios:
+        password = input("Confirme a senha para excluir: ").strip()
+        if usuarios[username]['senha'] == password:
+            del usuarios[username]
+            print(f"\n✅ Perfil de {username} excluído com sucesso.")
+        else:
+            print("\n❌ Senha incorreta. Exclusão cancelada.")
+    else:
+        print("\n❌ Usuário não encontrado.")
