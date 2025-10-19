@@ -98,6 +98,8 @@ def verificar_login():
         print("\n❌ Usuário ou senha incorretos.")
         return None
 
+# Adicione esta função ao final de user_manager.py
+
 def editar_usuario(username):
     """Permite que um usuário logado edite suas próprias informações."""
     if username not in usuarios:
@@ -109,12 +111,64 @@ def editar_usuario(username):
 
     user_data = usuarios[username]
 
+    # Editar dados pessoais
     novo_nome = input(f"Nome completo ({user_data['nome']}): ").strip()
     if novo_nome:
         user_data['nome'] = novo_nome
 
-    # Lógica para editar os outros campos (sexo, idade, peso, altura, etc.)
-    # (Adicione loops de validação similares aos do cadastro se desejar)
+    while True:
+        novo_sexo = input(f"Sexo (M/F) ({user_data['sexo']}): ").strip().upper()
+        if novo_sexo in ['M', 'F']:
+            user_data['sexo'] = novo_sexo
+            break
+        elif not novo_sexo: # Se o usuário pressionar Enter
+            break
+        else:
+            print("Entrada inválida. Digite 'M' ou 'F'.")
+
+    # Editar dados físicos
+    while True:
+        try:
+            nova_idade_str = input(f"Idade ({user_data['idade']}): ").strip()
+            if not nova_idade_str:
+                break
+            nova_idade = int(nova_idade_str)
+            if 10 < nova_idade < 120:
+                user_data['idade'] = nova_idade
+                break
+            else:
+                print("Idade deve ser um número entre 10 e 120.")
+        except ValueError:
+            print("Por favor, digite um número para a idade.")
+
+    while True:
+        try:
+            novo_peso_str = input(f"Peso em kg ({user_data['peso']}): ").strip()
+            if not novo_peso_str:
+                break
+            novo_peso = float(novo_peso_str)
+            if novo_peso > 0:
+                user_data['peso'] = novo_peso
+                break
+            else:
+                print("O peso deve ser maior que zero.")
+        except ValueError:
+            print("Por favor, digite um número válido para o peso.")
+            
+    while True:
+        try:
+            nova_altura_str = input(f"Altura em metros ({user_data['altura']}): ").strip()
+            if not nova_altura_str:
+                break
+            nova_altura = float(nova_altura_str)
+            if 0.5 < nova_altura < 3.0:
+                user_data['altura'] = nova_altura
+                break
+            else:
+                print("A altura deve estar entre 0.5 e 3.0 metros.")
+        except ValueError:
+            print("Por favor, digite um número válido para a altura.")
+
     print("\n✅ Perfil atualizado com sucesso!")
 
 
