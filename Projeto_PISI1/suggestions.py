@@ -1,9 +1,7 @@
-# suggestions.py
+import utils
 
 def gerar_sugestao_dieta(tmb, peso, objetivo):
-    """
-    Gera uma sugestão de dieta mais detalhada com metas calóricas e de macronutrientes.
-    """
+    utils.limpar_tela()
     if tmb <= 0 or peso <= 0:
         return "Dados insuficientes para calcular a dieta."
 
@@ -40,14 +38,12 @@ def gerar_sugestao_dieta(tmb, peso, objetivo):
         f"  - **Café da Manhã:** Fonte de proteína (ex: ovos) + carboidrato complexo (ex: aveia).\n"
         f"  - **Almoço/Jantar:** Proteína magra (ex: frango, peixe) + carboidrato complexo (ex: batata doce, arroz integral) + vegetais e salada à vontade.\n"
         f"  - **Lanches:** Frutas, iogurte natural, castanhas ou whey protein.\n\n"
-        f"💧 **Lembre-se de beber bastante água!** (pelo menos 2 litros por dia).\n"
+        f" **Lembre-se de beber bastante água!** (pelo menos 2 litros por dia).\n"
     )
     return sugestao
 
 def gerar_sugestao_treino(nivel, objetivo):
-    """
-    Gera uma rotina de treino mais detalhada com exemplos de exercícios.
-    """
+    utils.limpar_tela()
     cardio_sugestao = ""
     if objetivo == 'perder gordura':
         cardio_sugestao = "Cardio Sugerido: 3-4 vezes por semana, 30-40 minutos (ex: corrida leve, bicicleta)."

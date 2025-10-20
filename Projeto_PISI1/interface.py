@@ -1,9 +1,10 @@
 # interface.py
 import health_calculator
 import suggestions 
+import utils
 
 def exibir_menu_deslogado():
-    """Exibe o menu para usuários não logados."""
+    utils.limpar_tela()
     print("\n=========================")
     print(" BEM-VINDO AO Equilibr.IA")
     print("=========================")
@@ -13,7 +14,7 @@ def exibir_menu_deslogado():
     return input("Qual função deseja acessar? ")
 
 def exibir_menu_logado(username):
-    """Exibe o menu para usuários logados."""
+    utils.limpar_tela()
     print(f"\n--- MENU DO USUÁRIO: {username} ---")
     print("1. Ver meu Painel de Saúde")
     print("2. Editar Perfil")
@@ -22,7 +23,7 @@ def exibir_menu_logado(username):
     return input("Escolha uma opção: ")
 
 def exibir_dashboard(user_data):
-    """Calcula e exibe todos os resultados e as novas sugestões detalhadas."""
+    utils.limpar_tela()
     # Coleta os dados do usuário
     peso = user_data['peso']
     altura = user_data['altura']
@@ -36,7 +37,7 @@ def exibir_dashboard(user_data):
     tmb = health_calculator.calcular_tmb(sexo, peso, altura, idade)
     
     # Usa as funções do módulo de sugestões
-    dieta_sugestao = suggestions.gerar_sugestao_dieta(tmb, objetivo, peso)
+    dieta_sugestao = suggestions.gerar_sugestao_dieta(tmb, peso, objetivo)
     treino_sugestao = suggestions.gerar_sugestao_treino(nivel_treino, objetivo)
     
     # Exibe os resultados

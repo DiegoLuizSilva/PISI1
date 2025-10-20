@@ -1,10 +1,10 @@
-# user_manager.py
+import utils
 
 # A nossa "base de dados" em memória vive neste módulo.
 usuarios = {}
 
 def get_valid_input(prompt, valid_options):
-    """Pede uma entrada ao usuário até que seja uma das opções válidas."""
+    utils.limpar_tela()
     while True:
         value = input(prompt).strip().lower()
         if value in valid_options:
@@ -12,7 +12,7 @@ def get_valid_input(prompt, valid_options):
         print(f"Opção inválida. Por favor, escolha uma das seguintes: {', '.join(valid_options)}")
 
 def cadastrar_usuario():
-    """Realiza o cadastro de um novo usuário no dicionário 'usuarios'."""
+    utils.limpar_tela()
     print("\n--- CADASTRO ---")
     
     while True:
@@ -86,7 +86,7 @@ def cadastrar_usuario():
     print(f"\n✅ Usuário {username} cadastrado com sucesso!")
 
 def verificar_login():
-    """Verifica as credenciais do usuário e retorna o username se for válido."""
+    utils.limpar_tela()
     print("\n--- ACESSAR CONTA ---")
     username = input("Digite o nome de usuário: ").strip()
     password = input("Digite a senha: ").strip()
@@ -101,7 +101,7 @@ def verificar_login():
 # Adicione esta função ao final de user_manager.py
 
 def editar_usuario(username):
-    """Permite que um usuário logado edite suas próprias informações."""
+    utils.limpar_tela()
     if username not in usuarios:
         print("\n❌ Usuário não encontrado. Ocorreu um erro.")
         return
@@ -173,7 +173,7 @@ def editar_usuario(username):
 
 
 def excluir_usuario():
-    """Exclui um usuário do dicionário."""
+    utils.limpar_tela()
     print("\n--- EXCLUIR PERFIL ---")
     username = input("Digite o nome de usuário que deseja excluir: ").strip()
     
